@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .calculator input, .calculator select, .calculator button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>BMI Calculator</h1>
+    <select id="formula">
+        <option value="m">Metric (kg, m)</option>
+        <option value="i">Imperial (lbs, in)</option>
+    </select>
+    <input type="text" id="weight" placeholder="Enter your weight">
+    <input type="text" id="height" placeholder="Enter your height">
+    <button onclick="calculateBMI()">Calculate BMI</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateBMI() {
+        const formula = document.getElementById('formula').value;
+        let weight = parseFloat(document.getElementById('weight').value);
+        let height = parseFloat(document.getElementById('height').value);
+
+        if (isNaN(weight) || isNaN(height)) {
+            document.getElementById('result').textContent = 'Please enter valid numeric values for weight and height.';
+            return;
+        }
+
+        if (height <= 0) {
+            document.getElementById('result').textContent = 'Height must be greater than zero.';
+            return;
+        }
+
+        let bmi;
+        if (formula === 'm') {
+            bmi = weight / (height * height); // Metric formula: weight (kg) / height (m)^2
+        } else if (formula === 'i') {
+            bmi = 703 * (weight / (height * height)); // Imperial formula: 703 * (weight (lbs) / height (in)^2
+        } else {
+            document.getElementById('result').textContent = 'Invalid formula type. Use \'m\' for Metric or \'i\' for Imperial.';
+            return;
+        }
+
+        document.getElementById('result').textContent = `Your BMI is: ${bmi.toFixed(2)}`;
+    }
+</script>
+
+</body>
+</html>
